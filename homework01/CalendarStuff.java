@@ -249,7 +249,7 @@ public class CalendarStuff {
       }
     }
 
-    /**
+  /**
    * A method to return a count of the total number of days between two valid dates
    * @param    month1 long   containing month number, starting with "1" for "January"
    * @param    day1   long   containing day number
@@ -270,16 +270,16 @@ public class CalendarStuff {
         while (!dateEquals(month, day, year, month2, day2, year2)) {
           count++;
           day++;
-            if (day > daysInMonth(month, year)) {
+            if (day >= daysInMonth(month, year)) {
               day = 1;
               month++;
             }
-            if (month > DECEMBER) {
+            if (month >= DECEMBER) {
             month = 0;
             year++;
           }
-          if (year > year2) {
-          year = year - 1;
+          if (year >= year2) {
+          return count;
         }
             // System.out.println("count" + count + "day" + day);
             //  if ((daysInMonth(month, year) == day) && (month < month2)) {
@@ -302,4 +302,3 @@ public class CalendarStuff {
        return count;
      }
    }
-
