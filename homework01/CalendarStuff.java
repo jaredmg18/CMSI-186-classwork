@@ -1,4 +1,4 @@
-  /**
+ /**
  *  File name     :  CalendarStuff.java
  *  Purpose       :  Provides a class with supporting methods for CountTheDays.java program
  *  Author        :  B.J. Johnson (prototype)
@@ -260,14 +260,14 @@ public class CalendarStuff {
    */
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
      long count = 0;
-     //switch dates if date2 < date1
       long year = year1;
       long month = month1;
       long day = day1;
+      if (compareDate(month1, day1, year1, month2, day2, year2) == 1) {
+        count = count + 1;
+        return count;
+      } else {
         while (!dateEquals(month, day, year, month2, day2, year2)) {
-          //System.out.println("count" + count + "day" + day);
-          //System.out.println("month" + month + "year" + year);
-          //System.out.println("daysInMonth" + daysInMonth(month, year));
             if (day == daysInMonth(month, year)) {
               if (month-1 == DECEMBER) {
                 month = 0;
@@ -279,25 +279,7 @@ public class CalendarStuff {
           count++;
           day++;
         }
-        //System.out.println("count" + count);
+      }
         return count;
-            // System.out.println("count" + count + "day" + day);
-            //  if ((daysInMonth(month, year) == day) && (month < month2)) {
-            //     month = month + 1;
-            //     day = 1;
-            //     day++;
-            //     count = count + 1;
-            //     System.out.println("count" + count + "day" + day + "month" + month);
-        //  }
-        //  if ((daysInMonth(month, year) == day) && (month == month2) && (year < year2)) {
-        //    year = year + 1;
-        //    month = 1;
-        //    day = 1;
-        //    day++;
-        //    count = count + 1;
-        //  }
-        //  if ((daysInMonth(month, year) == day) && (month == month2) && (year == year2)) {
-        //    return count;
-
      }
    }
