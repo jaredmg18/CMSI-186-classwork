@@ -266,7 +266,7 @@ public class CalendarStuff {
       long day = day1;
       if (dateEquals(month, day, year, month2, day2, year2)) {
         return count;
-      } else  {
+      }
         while (!dateEquals(month, day, year, month2, day2, year2)) {
           count++;
           day++;
@@ -299,7 +299,6 @@ public class CalendarStuff {
         //  if ((daysInMonth(month, year) == day) && (month == month2) && (year == year2)) {
         //    return count;
          }
-       }
        return count;
      }
    }
