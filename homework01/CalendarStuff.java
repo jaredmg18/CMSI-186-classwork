@@ -276,16 +276,7 @@ public class CalendarStuff {
        year2 = temp;
      }
      if (compareDate(month1, day1, year1, month2, day2, year2) == 0) {
-       long temp = 0;
-       temp = month;
-       month = month2;
-       month2 = temp;
-       temp = day;
-       day = day2;
-       day2 = temp;
-       temp = year;
-       year = year2;
-       year2 = temp;
+       return count;
      }
         while (!dateEquals(month, day, year, month2, day2, year2)) {
             if (day == daysInMonth(month, year)) {
