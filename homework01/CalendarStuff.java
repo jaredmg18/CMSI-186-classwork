@@ -1,4 +1,4 @@
- /**
+/**
  *  File name     :  CalendarStuff.java
  *  Purpose       :  Provides a class with supporting methods for CountTheDays.java program
  *  Author        :  B.J. Johnson (prototype)
@@ -133,9 +133,9 @@ public class CalendarStuff {
    * @return          int    -1/0/+1 if first date is less than/equal to/greater than second
    */
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      if (year2 < year1) {
-        if (month2 < month1) {
-          if (day2 < day1) {
+      if (year1 < year2) {
+        if (month1 < month2) {
+          if (day1 < day2) {
             return -1;
           } else {
             return -1;
@@ -263,10 +263,30 @@ public class CalendarStuff {
       long year = year1;
       long month = month1;
       long day = day1;
-      if (compareDate(month1, day1, year1, month2, day2, year2) == 1) {
-        count = count + 1;
-        return count;
-      } else {
+     if (compareDate(month1, day1, year1, month2, day2, year2) == 1) {
+       long temp = 0;
+       temp = month;
+       month = month2;
+       month2 = temp;
+       temp = day;
+       day = day2;
+       day2 = temp;
+       temp = year;
+       year = year2;
+       year2 = temp;
+     }
+     if (compareDate(month1, day1, year1, month2, day2, year2) == 0) {
+       long temp = 0;
+       temp = month;
+       month = month2;
+       month2 = temp;
+       temp = day;
+       day = day2;
+       day2 = temp;
+       temp = year;
+       year = year2;
+       year2 = temp;
+     }
         while (!dateEquals(month, day, year, month2, day2, year2)) {
             if (day == daysInMonth(month, year)) {
               if (month-1 == DECEMBER) {
@@ -279,7 +299,6 @@ public class CalendarStuff {
           count++;
           day++;
         }
-      }
-        return count;
-     }
-   }
+   return count;
+}
+}
