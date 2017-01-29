@@ -134,22 +134,23 @@ public class CalendarStuff {
    */
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
       if (year1 < year2) {
-        if (month1 < month2) {
-          if (day1 < day2) {
+        return -1;
+      } else {
+        if ((year1 == year2) && (month1 < month2)) {
+          return -1;
+        } else {
+          if ((year1 == year2) && (month1 == month2) && (day1 < day2)) {
             return -1;
           } else {
-            return -1;
+            if ((year2 == year1) && (month2 == month1) && (day1 == day2)) {
+              return 0;
+          } else {
+            return 1;
           }
-        } else {
-          return -1;
         }
       }
-      if ((year2 == year1) && (month2 == month1) && (day1 == day2)) {
-        return 0;
-      } else {
-        return 1;
-      }
-   }
+    }
+  }
 
   /**
    * A method to return whether a date is a valid date
@@ -263,6 +264,9 @@ public class CalendarStuff {
       long year = year1;
       long month = month1;
       long day = day1;
+      if (compareDate(month1, day1, year1, month2, day2, year2) == 0) {
+        return count;
+      } else {
      if (compareDate(month1, day1, year1, month2, day2, year2) == 1) {
        long temp = 0;
        temp = month;
@@ -274,9 +278,6 @@ public class CalendarStuff {
        temp = year;
        year = year2;
        year2 = temp;
-     }
-     if (compareDate(month1, day1, year1, month2, day2, year2) == 0) {
-       return count;
      }
         while (!dateEquals(month, day, year, month2, day2, year2)) {
             if (day == daysInMonth(month, year)) {
@@ -291,5 +292,6 @@ public class CalendarStuff {
           day++;
         }
    return count;
+}
 }
 }
