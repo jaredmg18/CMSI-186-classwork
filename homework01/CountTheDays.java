@@ -23,7 +23,6 @@
  */
 public class CountTheDays {
   public static void main (String args[]) {
-    System.out.println("args.lenght =" + args.length);
     if (args.length != 6) {
        System.out.println("Not enough args");
        System.exit(1);
