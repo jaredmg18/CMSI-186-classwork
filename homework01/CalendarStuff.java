@@ -162,31 +162,15 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) {
-     if (month < 1) {
+     if (year < 1) {
        return false;
-     } else {
-       if (month > 12) {
-         return false;
-       }
+     } else if (month < 1 || month > 12) {
+       return false;
+     } else if (day < 1 || day > daysInMonth(month, year)) {
+       return false;
      }
-         if (day < 1) {
-           return false;
-         } else {
-           if (day > 31)
-             return false;
-         }
-         if ((daysInMonth(month, year) < 31) && (day == 31)) {
-           return false;
-         }
-         if ((isLeapYear(year) && (month == 2) && (day == 29))) {
-           return true;
-         } else{
-       if ((month == 2) && (day > 28)) {
-         return false;
-       }
-     }
-       return true;
-       }
+     return true;
+   }
 
   /**
    * A method to return a string version of the month name
