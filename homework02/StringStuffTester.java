@@ -105,26 +105,30 @@ public class StringStuffTester {
   * @return void
   */
   static void test_evensOnly() {
-    System.out.println("\nFive Tests for evensOnly():");
+    System.out.println("\nSix Tests for evensOnly():");
 
-    System.out.print(" A: ");
-    try {System.out.println( "" == StringStuff.evensOnly("A") ? "" : "bad test");}
+    System.out.print("A:");
+    try {System.out.println( "".equals(StringStuff.evensOnly("A")) ? "" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
-    System.out.print(" B: ");
-    try {System.out.println( "B" == StringStuff.evensOnly("B") ? "B" : "bad test");}
+    System.out.print("B:");
+    try {System.out.println( "B".equals(StringStuff.evensOnly("B")) ? "B" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
-    System.out.print(" Go Sharks: ");
-    try {System.out.println( "hr" == StringStuff.evensOnly("Go Sharks") ? "hr" : "bad test");}
+    System.out.print("Bldbl:");
+    try {System.out.println( "Bldbl".equals(StringStuff.evensOnly("Bldbl")) ? "Bldbl" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
-    System.out.print(" Bld blk: ");
-    try {System.out.println( "Bld blk " == StringStuff.evensOnly("Bld blk") ? "Bld blk" : "bad test");}
+    System.out.print("Aca:");
+    try {System.out.println( "".equals(StringStuff.evensOnly("Aca")) ? "" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
-    System.out.print(" Aca: ");
-    try {System.out.println( "" == StringStuff.evensOnly("Aca") ? "" : "bad test");}
+    System.out.print("REhearSALsz:");
+    try {System.out.println( "RhrLz".equals(StringStuff.evensOnly("REhearSALsz")) ? "RhrLz" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print("REHEARSALSZ:");
+    try {System.out.println( "RHRLZ".equals(StringStuff.evensOnly("REHEARSALSZ")) ? "RHRLZ" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
   }
 
@@ -133,26 +137,30 @@ public class StringStuffTester {
   * @return void
   */
   static void test_oddsOnly() {
-    System.out.println("\nFive tests for oddsOnly():");
+    System.out.println("\nSix tests for oddsOnly():");
 
     System.out.print(" A: ");
-    try {System.out.println( "A" == StringStuff.evensOnly("A") ? "" : "bad test");}
+    try {System.out.println( "A".equals(StringStuff.oddsOnly("A")) ? "A" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" B: ");
-    try {System.out.println( "" == StringStuff.evensOnly("B") ? "B" : "bad test");}
+    try {System.out.println( "".equals(StringStuff.oddsOnly("B")) ? "" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
-    System.out.print(" Go Sharks: ");
-    try {System.out.println( "Go Saks" == StringStuff.evensOnly("Go Sharks") ? "Go Saks" : "bad test");}
-    catch( Exception e ) { System.out.println(false); }
-
-    System.out.print(" Bld blk: ");
-    try {System.out.println( "" == StringStuff.evensOnly("Bld blk") ? "" : "bad test");}
+    System.out.print(" Bldblk: ");
+    try {System.out.println( "k".equals(StringStuff.oddsOnly("Bldblk")) ? "k" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" Aca: ");
-    try {System.out.println( "Aca" == StringStuff.evensOnly("Aca") ? "Aca" : "bad test");}
+    try {System.out.println( "Aca".equals(StringStuff.oddsOnly("Aca")) ? "Aca" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" xylophones: ");
+    try {System.out.println( "yooes".equals(StringStuff.oddsOnly("xylophones")) ? "yooes" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" XYloPHonES: ");
+    try {System.out.println( "YooES".equals(StringStuff.oddsOnly("XYloPHonES")) ? "YooES" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
   }
 
@@ -161,22 +169,30 @@ public class StringStuffTester {
   * @return void
   */
   static void test_oddsOnlyNoDupes() {
-    System.out.println("\nFour tests for oddsOnlyNoDupes():");
+    System.out.println("\nSix tests for oddsOnlyNoDupes():");
 
     System.out.print(" aca: ");
-    try {System.out.println( "ac" == StringStuff.evensOnly("aca") ? "ac" : "bad test");}
+    try {System.out.println( "ac".equals(StringStuff.oddsOnlyNoDupes("aca")) ? "ac" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" bdb: ");
-    try {System.out.println( "" == StringStuff.evensOnly("bdb") ? "" : "bad test");}
+    try {System.out.println( "".equals(StringStuff.oddsOnlyNoDupes("bdb")) ? "" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" JaredJared: ");
-    try {System.out.println( "ae" == StringStuff.evensOnly("Jared") ? "ae" : "bad test");}
+    try {System.out.println( "ae".equals(StringStuff.oddsOnlyNoDupes("Jared")) ? "ae" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" bbbccc: ");
-    try {System.out.println( "c" == StringStuff.evensOnly("bbbccc") ? "c" : "bad test");}
+    try {System.out.println( "c".equals(StringStuff.oddsOnlyNoDupes("bbbccc")) ? "c" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" xylophones: ");
+    try {System.out.println( "yoes".equals(StringStuff.oddsOnlyNoDupes("xylophones")) ? "yoes" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" XYloPHonES: ");
+    try {System.out.println( "YoES".equals(StringStuff.oddsOnlyNoDupes("xylophones")) ? "YoES" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
    }
 
@@ -185,22 +201,26 @@ public class StringStuffTester {
    * @return void
    */
    static void test_evensOnlyNoDupes() {
-     System.out.println("\nFour tests for evensOnlyNoDupes():");
+     System.out.println("\nFive tests for evensOnlyNoDupes():");
 
      System.out.print(" aca: ");
-     try {System.out.println( "" == StringStuff.evensOnly("aca") ? "" : "bad test");}
+     try {System.out.println( "".equals(StringStuff.evensOnlyNoDupes("aca")) ? "" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" bdb: ");
-     try {System.out.println( "bd" == StringStuff.evensOnly("bdb") ? "bd" : "bad test");}
+     try {System.out.println( "bd".equals(StringStuff.evensOnlyNoDupes("bdb")) ? "bd" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" JaredJared: ");
-     try {System.out.println( "Jrd" == StringStuff.evensOnly("Jared") ? "Jrd" : "bad test");}
+     try {System.out.println( "Jrd".equals(StringStuff.evensOnlyNoDupes("Jared")) ? "Jrd" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" bbbccc: ");
-     try {System.out.println( "b" == StringStuff.evensOnly("bbbccc") ? "b" : "bad test");}
+     try {System.out.println( "b".equals(StringStuff.evensOnlyNoDupes("bbbccc")) ? "b" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" REhearSALsz: ");
+     try {System.out.println( "RhrLz".equals(StringStuff.evensOnlyNoDupes("REhearSALsz")) ? "RhrLz" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
    }
 
@@ -209,18 +229,22 @@ public class StringStuffTester {
    * @return void
    */
    static void test_reverse() {
-     System.out.println("\nThree tests for reverse():");
+     System.out.println("\nFour tests for reverse():");
 
      System.out.print(" what the cluck: ");
-     try {System.out.println( "kculc eht tahw" == StringStuff.evensOnly("what the cluck") ? "kculc eht tahw" : "bad test");}
+     try {System.out.println( "kculc eht tahw".equals(StringStuff.reverse("what the cluck")) ? "kculc eht tahw" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" bdb: ");
-     try {System.out.println( "bdb" == StringStuff.evensOnly("bdb") ? "bdb" : "bad test");}
+     try {System.out.println( "bdb".equals(StringStuff.reverse("bdb")) ? "bdb" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" jaredjared: ");
-     try {System.out.println( "derajderaj" == StringStuff.evensOnly("jaredjared") ? "derajderaj" : "bad test");}
+     try {System.out.println( "derajderaj".equals(StringStuff.reverse("jaredjared")) ? "derajderaj" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" REHEARSALSZ: ");
+     try {System.out.println( "ZSLASRAEHER".equals(StringStuff.reverse("REHEARSALSZ")) ? "ZSLASRAEHER" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
    }
 }
