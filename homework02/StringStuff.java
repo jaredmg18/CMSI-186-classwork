@@ -89,15 +89,15 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input
    */
    public static String evensOnly( String s ) {
-    String evens = new String ("BDFHJLNPRTVXZbdfhjlnprtvxz");
-    String r = new String ("");
-      for (int i = 0; i < (s.length() - 1); i ++) {
-        if (evens.contains(Character.toString(s.charAt(i)))) {
-          r.concat(s.charAt(i));
-        }
-        return r;
-      }
-     }
+     String evens = new String ("BDFHJLNPRTVXZbdfhjlnprtvxz");
+     String r = new String ("");
+       for (int i = 0; i < s.length(); i ++) {
+         if (evens.contains(Character.toString(s.charAt(i)))) {
+           r = r.concat(Character.toString(s.charAt(i)));
+         }
+       }
+      return r;
+    }
 
   /**
    * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
@@ -108,7 +108,14 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input
    */
    public static String oddsOnly( String s ) {
-      return new String( "IKIKIK" );
+     String odds = new String ("ACEGIKMOQSUWYacegikmoqsuwy");
+     String r = new String ("");
+     for (int i = 0; i < s.length(); i++ ) {
+       if (odds.contains(Character.toString(s.charAt(i)))) {
+        r = r.concat(Character.toString(s.charAt(i)));
+       }
+     }
+     return r;
    }
 
   /**
@@ -140,12 +147,11 @@ public class StringStuff {
    * @return  String containing the reverse of the input string
    */
    public static String reverse( String s ) {
-    //  int i = s.length();
-    //  String R = "";
-    //  for (i = s.length(); i >= 0; i-- ) {
-    //    R.concat(s.charAt(i));
-    //  }
-    return s;
+      String r = new String ("");
+      for (int i = (s.length() - 1); i >= 0; i-- ) {
+        r = r.concat(Character.toString(s.charAt(i)));
+      }
+      return r;
    }
 
   /**
