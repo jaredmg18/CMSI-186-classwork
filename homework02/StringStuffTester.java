@@ -31,13 +31,13 @@ public class StringStuffTester {
    * @return void
    */
    public static void main ( String [] args) {
-     test_containsVowel();  // 4 tests
-     test_isPalindrome();   // 7 tests
+     test_containsVowel();  // 9 tests
+     test_isPalindrome();   // 9 tests
      test_evensOnly();      // 6 tests
      test_oddsOnly();      // 6 tests
      test_evensOnlyNoDupes();   // 7 tests
-     test_oddsOnlyNoDupes();  //6 tests
-     test_reverse();  // 4 tests
+     test_oddsOnlyNoDupes();  // 8 tests
+     test_reverse();  // 7 tests
    }
 
    /**
@@ -45,7 +45,7 @@ public class StringStuffTester {
    * @return void
    */
   static void test_containsVowel() {
-    System.out.println("\nFour Tests for containsVowel():");
+    System.out.println("\nNine Tests for containsVowel():");
 
     System.out.print( " I like pizza: ");
     try { System.out.println( StringStuff.containsVowel("I like pizza") ? "true" : "false");}
@@ -62,6 +62,27 @@ public class StringStuffTester {
     System.out.print(" : ");
     try { System.out.println( StringStuff.containsVowel("") ? "true" : "false");}
     catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" E: ");
+    try { System.out.println( StringStuff.containsVowel("e") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" i: ");
+    try { System.out.println( StringStuff.containsVowel("i") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" o: ");
+    try { System.out.println( StringStuff.containsVowel("o") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" U: ");
+    try { System.out.println( StringStuff.containsVowel("u") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" y: ");
+    try { System.out.println( StringStuff.containsVowel("y") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
   }
 
   /**
@@ -69,7 +90,7 @@ public class StringStuffTester {
   * @return void
   */
   static void test_isPalindrome() {
-    System.out.println("\nSeven Tests for isPalindrome():");
+    System.out.println("\nNine Tests for isPalindrome():");
 
     System.out.print(" mom: ");
     try { System.out.println( StringStuff.isPalindrome("mom") ? "true" : "false");}
@@ -97,6 +118,14 @@ public class StringStuffTester {
 
     System.out.print(" amanaplanacanalpanama: ");
     try { System.out.println( StringStuff.isPalindrome("amanaplanacanalpanama") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" abcdefghihgfedcb: ");
+    try { System.out.println( StringStuff.isPalindrome("abcdefghihgfedcb") ? "true" : "false");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" abcdefgh hgfedcb: ");
+    try { System.out.println( StringStuff.isPalindrome("abcdefghihgfedcb") ? "true" : "false");}
     catch( Exception e ) { System.out.println(false); }
   }
 
@@ -169,7 +198,7 @@ public class StringStuffTester {
   * @return void
   */
   static void test_oddsOnlyNoDupes() {
-    System.out.println("\nSeven tests for oddsOnlyNoDupes():");
+    System.out.println("\nEight tests for oddsOnlyNoDupes():");
 
     System.out.print(" a: ");
     try {System.out.println( "a".equals(StringStuff.oddsOnlyNoDupes("a")) ? "a" : "bad test");}
@@ -196,7 +225,11 @@ public class StringStuffTester {
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" XYloPHonES: ");
-    try {System.out.println( "YoES".equals(StringStuff.oddsOnlyNoDupes("xylophones")) ? "YoES" : "bad test");}
+    try {System.out.println( "YoES".equals(StringStuff.oddsOnlyNoDupes("XYloPHonES")) ? "YoES" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
+
+    System.out.print(" bbbbbbbbbbb ccccccccccc: ");
+    try {System.out.println( "c".equals(StringStuff.oddsOnlyNoDupes("bbbbbbbbbbb ccccccccccc")) ? "c" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
    }
 
@@ -205,7 +238,7 @@ public class StringStuffTester {
    * @return void
    */
    static void test_evensOnlyNoDupes() {
-     System.out.println("\nSix tests for evensOnlyNoDupes():");
+     System.out.println("\nSeven tests for evensOnlyNoDupes():");
 
      System.out.print(" b: ");
      try {System.out.println( "b".equals(StringStuff.evensOnlyNoDupes("b")) ? "b" : "bad test");}
@@ -230,6 +263,10 @@ public class StringStuffTester {
      System.out.print(" REhearSALsz: ");
      try {System.out.println( "RhrLz".equals(StringStuff.evensOnlyNoDupes("REhearSALsz")) ? "RhrLz" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" bbbbbbbbbbb ccccccccccc: ");
+     try {System.out.println( "b".equals(StringStuff.evensOnlyNoDupes("bbbbbbbbbbb ccccccccccc")) ? "b" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
    }
 
    /**
@@ -237,7 +274,7 @@ public class StringStuffTester {
    * @return void
    */
    static void test_reverse() {
-     System.out.println("\nFour tests for reverse():");
+     System.out.println("\nSeven tests for reverse():");
 
      System.out.print(" what the cluck: ");
      try {System.out.println( "kculc eht tahw".equals(StringStuff.reverse("what the cluck")) ? "kculc eht tahw" : "bad test");}
@@ -253,6 +290,18 @@ public class StringStuffTester {
 
      System.out.print(" REHEARSALSZ: ");
      try {System.out.println( "ZSLASRAEHER".equals(StringStuff.reverse("REHEARSALSZ")) ? "ZSLASRAEHER" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" madamimadam: ");
+     try {System.out.println( "madamimadam".equals(StringStuff.reverse("madamimadam")) ? "madamimadam" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" amanaplanacanalpanama: ");
+     try {System.out.println( "amanaplanacanalpanama".equals(StringStuff.reverse("amanaplanacanalpanama")) ? "amanaplanacanalpanama" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
+
+     System.out.print(" backwards: ");
+     try {System.out.println( "sdrawkcab".equals(StringStuff.reverse("backwards")) ? "sdrawkcab" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
    }
 }
