@@ -24,7 +24,7 @@
 public class StringStuffProgram {
   public static void main (String [] args) {
     StringStuff ss = new StringStuff();
-    String s = String[input];
+    String s = new String(args[0]);
     if (ss.containsVowel(s)) {
       System.out.println("This string contains vowels");
     } else {
