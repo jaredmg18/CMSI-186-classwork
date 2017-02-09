@@ -74,7 +74,7 @@ public class StringStuff {
            continue;
          } else {
            return false;
-         }
+           }
          }
        return true;
      }
@@ -126,7 +126,14 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input without duplicates
    */
    public static String evensOnlyNoDupes( String s ) {
-      return new String( "HJ" );
+      String r = new String (evensOnly(s));
+      String output = "";
+      for (int i = 0; i < r.length(); i++ ) {
+        if (!output.contains(Character.toString(r.charAt(i)))) {
+          output = output.concat(Character.toString(r.charAt(i)));
+        }
+      }
+      return output;
    }
 
   /**
@@ -137,8 +144,15 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
    public static String oddsOnlyNoDupes( String s ) {
-      return new String( "IK" );
-   }
+      String r = new String (oddsOnly(s));
+      String output = "";
+      for (int i = 0; i < r.length(); i++ ) {
+        if (!output.contains(Character.toString(r.charAt(i)))) {
+          output = output.concat(Character.toString(r.charAt(i)));
+        }
+      }
+      return output;
+      }
 
   /**
    * Method to return the reverse of a string passed as an argument
