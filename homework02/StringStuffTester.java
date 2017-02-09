@@ -32,12 +32,12 @@ public class StringStuffTester {
    */
    public static void main ( String [] args) {
      test_containsVowel();  // 4 tests
-     test_isPalindrome();   // 6 tests
-     test_evensOnly();      // 4 tests
-     test_oddsOnly();      // 7 tests
-     test_evensOnlyNoDupes();   // 5 tests
-     test_oddsOnlyNoDupes();  //7 tests
-     test_reverse();  // 9 tests
+     test_isPalindrome();   // 7 tests
+     test_evensOnly();      // 6 tests
+     test_oddsOnly();      // 6 tests
+     test_evensOnlyNoDupes();   // 7 tests
+     test_oddsOnlyNoDupes();  //6 tests
+     test_reverse();  // 4 tests
    }
 
    /**
@@ -169,7 +169,11 @@ public class StringStuffTester {
   * @return void
   */
   static void test_oddsOnlyNoDupes() {
-    System.out.println("\nSix tests for oddsOnlyNoDupes():");
+    System.out.println("\nSeven tests for oddsOnlyNoDupes():");
+
+    System.out.print(" a: ");
+    try {System.out.println( "a".equals(StringStuff.oddsOnlyNoDupes("a")) ? "a" : "bad test");}
+    catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" aca: ");
     try {System.out.println( "ac".equals(StringStuff.oddsOnlyNoDupes("aca")) ? "ac" : "bad test");}
@@ -180,7 +184,7 @@ public class StringStuffTester {
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" JaredJared: ");
-    try {System.out.println( "ae".equals(StringStuff.oddsOnlyNoDupes("Jared")) ? "ae" : "bad test");}
+    try {System.out.println( "ae".equals(StringStuff.oddsOnlyNoDupes("JaredJared")) ? "ae" : "bad test");}
     catch( Exception e ) { System.out.println(false); }
 
     System.out.print(" bbbccc: ");
@@ -201,7 +205,11 @@ public class StringStuffTester {
    * @return void
    */
    static void test_evensOnlyNoDupes() {
-     System.out.println("\nFive tests for evensOnlyNoDupes():");
+     System.out.println("\nSix tests for evensOnlyNoDupes():");
+
+     System.out.print(" b: ");
+     try {System.out.println( "b".equals(StringStuff.evensOnlyNoDupes("b")) ? "b" : "bad test");}
+     catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" aca: ");
      try {System.out.println( "".equals(StringStuff.evensOnlyNoDupes("aca")) ? "" : "bad test");}
@@ -212,7 +220,7 @@ public class StringStuffTester {
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" JaredJared: ");
-     try {System.out.println( "Jrd".equals(StringStuff.evensOnlyNoDupes("Jared")) ? "Jrd" : "bad test");}
+     try {System.out.println( "Jrd".equals(StringStuff.evensOnlyNoDupes("JaredJared")) ? "Jrd" : "bad test");}
      catch( Exception e ) { System.out.println(false); }
 
      System.out.print(" bbbccc: ");
