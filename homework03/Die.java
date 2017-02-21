@@ -9,7 +9,7 @@
  *                   pip values [spots] ranging in value from one to six.  Includes the following:
  *                   public Die( int nSides );                  // Constructor for a single die with "N" sides
  *                   public int roll();                         // Roll the die and return the result
- *                   public int getSides()                      // get the number of sides on this die     
+ *                   public int getSides()                      // get the number of sides on this die
  *                   public int getValue()                      // get the value of this die
  *                   public void setSides()                     // change the configuration and return the new number of sides
  *                   public String toString()                   // Instance method that returns a String representation
@@ -31,7 +31,7 @@
  *  ---------------
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
- *  @version 1.0.0  2017-02-06  Jared Gencarella  Initial writing and release
+ *  @version 1.0.0  2017-02-06  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -48,8 +48,8 @@ public class Die {
   private int nRoll;
 
   public Die(int nSides) {
-    if (nSides < 4) {
-    System.out.println("Must have at least 4 sides");
+    if (nSides < MINIMUM_SIDES) {
+     throw new IllegalArgumentException("need at least 4 sides");
     } else {
       sides = nSides;
     }
@@ -64,11 +64,8 @@ public class Die {
     return nRoll;
   }
 
-  public void setValue(int kValue) {
-    kValue = nRoll;
-  }
-
   public int setSides(int sides) {
+    this.sides = sides;
     return sides;
   }
 
