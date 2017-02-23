@@ -80,7 +80,7 @@ public class DiceSet {
         for (int i = 0; i < dieArrayObject.length; i++) {
           total = total + dieArrayObject[i].getValue();
         }
-     return 1;
+     return total;
    }
 
   /**
@@ -106,30 +106,59 @@ public class DiceSet {
    public String toString() {
       String dieNum = "";
       for (int i = 0; i < dieArrayObject.length; i++) {
-        dieNum =  dieNum + "[" + dieArrayObject[i].getValue() + "]";
+        dieNum =  dieNum + " [" + dieArrayObject[i].getValue() + "] ";
       }
       return dieNum;
+   }
+
+   public String toNumString() {
+     String dieNum = "";
+     for (int i = 0; i < dieArrayObject.length; i++) {
+       dieNum =  dieNum + dieArrayObject[i].getValue();
+     }
+     return dieNum;
    }
 
   /**
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds ) {
-      return "";
+     String value = new String (ds.toString());
+      return value;
    }
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet ds ) {
-      return true;
+       String value =  ds.toNumString();
+       String output = "";
+       for (int i = 0; i < value.length(); i++) {
+         if (this.toNumString().contains(Character.toString(value.charAt(i)))) {
+           output = output.concat(Character.toString(value.charAt(i)));
+         }
+       }
+      return output.equals(value);
    }
 
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-     Die d = new Die(6);
-     System.out.println(d.toString());
+     DiceSet ds = new DiceSet(5, 6);
+     ds.roll();
+     System.out.println(ds.toString());
+     System.out.println(ds.toNumString());
+     DiceSet ds2 = new DiceSet(5, 6);
+     ds2.roll();
+     System.out.println(ds2.toString());
+     System.out.println(ds2.toNumString());
+     System.out.println(ds.isIdentical(ds2));
+     ds = new DiceSet (5, 6);
+     ds2 = new DiceSet(5, 6);
+     System.out.println(ds.toNumString());
+     System.out.println(ds2.toNumString());
+     ds.isIdentical(ds2);
+     System.out.println(ds.isIdentical(ds2));
    }
 }
