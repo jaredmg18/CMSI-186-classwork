@@ -45,23 +45,23 @@ public class Die {
   private int sides;
   private int pips;
   private final int MINIMUM_SIDES = 4;
-  private int nRoll;
 
   public Die(int nSides) {
     if (nSides < MINIMUM_SIDES) {
      throw new IllegalArgumentException("need at least 4 sides");
     } else {
-      sides = nSides;
+       this.sides = nSides;
+       this.pips = 1;
     }
   }
 
   public int roll() {
-    int nRoll = (int) ((Math.random() * sides) + 1);
-    return nRoll;
+    this.pips = (int) ((Math.random() * sides) + 1);
+    return this.pips;
   }
 
   public int getValue() {
-    return nRoll;
+    return this.pips;
   }
 
   public int setSides(int sides) {
@@ -69,9 +69,15 @@ public class Die {
     return sides;
   }
 
+  public String toString() {
+    String dieNum = "" + pips;
+    return dieNum;
+  }
+
   public static void main( String[] args) {
     System.out.println("Hello from the Die class main method");
     Die d = new Die(4);
     System.out.println("You rolled a: " + d.roll());
+    System.out.println(d.toString());
   }
 }
