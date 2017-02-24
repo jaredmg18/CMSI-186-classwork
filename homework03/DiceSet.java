@@ -50,12 +50,12 @@ public class DiceSet {
      if (count >= 1) {
        dieCount = count;
      } else {
-       throw new IllegalArgumentException("wrong number of die (must have at least one)");
+       throw new IllegalArgumentException("wrong number of die (must have at least one, can have at most 9)");
      }
      if (sides >= 4) {
        dieSides = sides;
      } else {
-       throw new IllegalArgumentException("wrong number of sides (must have at least 4)");
+       throw new IllegalArgumentException("wrong number of sides (must have at least 4, can have at most 9)");
      }
      dieArrayObject = new Die[count];
      for (int i = 0; i < count; i++) {
