@@ -48,7 +48,7 @@ public class Die {
 
   public Die(int nSides) {
     if (nSides < MINIMUM_SIDES) {
-     throw new IllegalArgumentException("need at least 4 sides");
+     throw new IllegalArgumentException("need at least 4 sides, at most can have 9");
     } else {
        this.sides = nSides;
        this.pips = 1;
