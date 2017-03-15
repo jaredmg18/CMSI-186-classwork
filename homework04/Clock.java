@@ -36,6 +36,9 @@ public class Clock {
 
    /**
     *  Constructor goes here
+    *  NOTICE THAT arg[0] is the slice in seconds
+    *  arg[1] is the angleInput in degrees
+    *  arg[2] is the window that gives the program flexibility to include any calculations in the given window
     */
     public Clock(double slice, double angleInput, double window) {
       this.angle = 0;
@@ -108,8 +111,8 @@ public class Clock {
       }
 
      /**
-      *  Method to calculate and return the angle between the hands
-      *  @return double-precision value of the angle between the two hands
+      *  Method to calculate and return the current position of the second hand
+      *  @return double-precision value of the second hand location
       */
       public double getSecondHand() {
          return this.seconds;
@@ -128,7 +131,10 @@ public class Clock {
          this.seconds = totalSeconds;
          return time;
       }
-
+      /**
+       *  Method to calculate and return the angle between the hands
+       *  @return double-precision value of the angle between the two hands
+       */
       public double anglePerTick() {
         double SecPerCycle = 3600;
         double minuteHand = 360 * (this.slice / SecPerCycle);
@@ -136,6 +142,9 @@ public class Clock {
         return minuteHand - secondHand;
       }
 
+     /**
+      *  Method to calculate the next angle and add it to the previous, to build the list of valid angles
+      */
       public void increasingAngle() {
         if(this.angle >= 360) {
           this.angle = this.angle - 360;
@@ -143,15 +152,26 @@ public class Clock {
         this.angle = this.angle + this.anglePerTick();
       }
 
+      /**
+       *  Method to calculate and return the angle between the hands
+       *  @return double-precision value of the angle between the two hands
+       */
       public double getAngle() {
         return this.angle;
       }
 
+     /**
+      *  Method to check if the clock has run through one full day
+      * @return boolean value if the method is true or not
+      */
       public boolean isStillRunning() {
         double SecPerDay = 43200;
         return this.seconds <= SecPerDay;
       }
 
+    /**
+     *
+     */
       public boolean formsAngleInput() {
         return ((this.angle < this.angleInput + this.window) && (this.angle > this.angleInput - this.window)) ||
         ((360 - this.angle < this.angleInput + this.window) && (360 - this.angle > this.angleInput - this.window));
@@ -177,4 +197,3 @@ public class Clock {
          catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
       }
    }
-
