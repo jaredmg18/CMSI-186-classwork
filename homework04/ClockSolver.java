@@ -22,8 +22,8 @@ public class ClockSolver {
   /**
    *  Class field definintions go here
    */
-   double angleInput = 1800.00;
-   double slice = 60.0;
+   static double angleInput = 1800.00;
+   static double slice = 60.0;
    double window = 0;
    //final double EPSILON_VALUE = 0.1;      // small value for double-precision comparisons
 
@@ -39,10 +39,10 @@ public class ClockSolver {
     */
     public void handleInitialArguments( String args[] ) {
       System.out.println( "\n   Hello world, from the ClockSolver program!!\n\n" ) ;
-      System.out.println( "\n   Please notice - arguments are as follow:\n\n" );
-      System.out.println( "\n   arg[0] is the desired timeslice in seconds\n\n");
-      System.out.println( "\n   arg[1] is the desired angleInput in degrees\n\n");
-      System.out.println( "\n   arg[2] is the desired window, which gives the program the flexibility to produce answers that are found in that window\n\n");
+      System.out.println( "   Please notice - arguments are as follow:" );
+      System.out.println( "   arg[0] is the desired timeslice in seconds");
+      System.out.println( "   arg[1] is the desired angleInput in degrees");
+      System.out.println( "   arg[2] is the desired window, which gives the program the flexibility to produce answers that are found in that window");
       if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Usage: java ClockSolver <angle> [timeSlice]\n" +
@@ -112,5 +112,5 @@ public class ClockSolver {
          }
       }
       System.exit(-1);
-   }
-}
+    }
+  }
