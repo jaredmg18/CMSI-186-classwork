@@ -170,7 +170,7 @@ public class Clock {
       }
 
     /**
-     *
+     * calculates if the angle found is a desired angle to be displayed
      */
       public boolean formsAngleInput() {
         return ((this.angle < this.angleInput + this.window) && (this.angle > this.angleInput - this.window)) ||
