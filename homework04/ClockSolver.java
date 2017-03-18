@@ -19,14 +19,13 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 public class ClockSolver {
+
   /**
    *  Class field definintions go here
    */
    static double angleInput = 1800.00;
    static double slice = 60.0;
    double window = 0;
-   //final double EPSILON_VALUE = 0.1;      // small value for double-precision comparisons
-
 
   /**
    *  Constructor
