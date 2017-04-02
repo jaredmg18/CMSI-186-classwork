@@ -7,16 +7,18 @@ public class Timer {
   double newSeconds;
   double leftSeconds;
 
-  public Timer(double timeIncrement) {
+  public Timer(double timeSlice) {
     seconds = 0;
     minutes = 0;
     hours = 0;
-    timeIncrement = timeIncrement;
+    timeIncrement = timeSlice;
     leftSeconds = 0;
+    totalSeconds = 0;
   }
 
-  public void tick() {
-    seconds += timeIncrement;
+  public double tick() {
+    totalSeconds += timeIncrement;
+    return totalSeconds;
   }
 
   public double getSeconds() {
@@ -27,8 +29,8 @@ public class Timer {
       return seconds;
     }
     if((seconds > 60) && (seconds%60 != 0)) {
-      leftSeconds = seconds % 60;
-      return leftSeconds;
+      seconds = seconds % 60;
+      return seconds;
     }
     return seconds;
   }
@@ -66,8 +68,12 @@ public class Timer {
     return hours;
   }
 
+  public String toString() {
+    return "Timer: [" + hours + ":" + minutes + ":" + totalSeconds + "]";
+  }
+
   public static void main (String args[]) {
-    Timer t = new Timer(10);
+    Timer t = new Timer(1);
     System.out.println("hello");
   }
 }
