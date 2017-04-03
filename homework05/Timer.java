@@ -18,11 +18,11 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 public class Timer {
-  double hours;
-  double minutes;
+  static double hours;
+  static double minutes;
   double seconds;
   double timeIncrement;  // this increment will always be in seconds
-  double totalSeconds;
+  static double totalSeconds;
   double newSeconds;
 
   public Timer(double timeSlice) {
@@ -91,7 +91,37 @@ public class Timer {
   }
 
   public static void main (String args[]) {
+    System.out.println("Testing timer with time slice 1 second");
     Timer t = new Timer(1);
-    System.out.println("hello");
+    t.tick();
+    t.toString();
+    System.out.println("Timer: [" + t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds() + "]");
+    t.tick();
+    t.toString();
+    System.out.println("Timer: [" + t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds() + "]");
+
+    System.out.println("Testing timer with time slice 30 seconds");
+    Timer t2 = new Timer(30);
+    t2.tick();
+    t2.toString();
+    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+    t2.tick();
+    t2.toString();
+    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+    t2.tick();
+    t2.toString();
+    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+
+    System.out.println("Testing timer with time slice 60 seconds");
+    Timer t3 = new Timer(60);
+    t3.tick();
+    t3.toString();
+    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
+    t3.tick();
+    t3.toString();
+    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
+    t3.tick();
+    t3.toString();
+    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
   }
 }
