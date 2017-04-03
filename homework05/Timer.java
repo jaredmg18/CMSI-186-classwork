@@ -1,3 +1,22 @@
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  File name     :  Timer.java
+ *  Purpose       :  Timer class that will be used for the Soccer Simulation program
+ *  @see
+ *  @author       :  Jared Gencarella
+ *  Date written  :  2017-03-28
+ *  Description   :  This class provides a timer that will be used as a tick to mark how often the Soccer
+                     Simulation program updates itself and keeps track of how much time has passed while the program runs.
+ *  Notes         :  Added throughout methods in the class
+ *  Warnings      :  None
+ *  Exceptions    :  None
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Revision Histor
+ *  ---------------
+ *            Rev      Date     Modified by:       Reason for change/modification
+ *           -----  ----------  ------------      -----------------------------------------------------------
+ *  @version 1.0.0  2017-03-28  Jared Gencarella   Initial writing and release
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 public class Timer {
   double hours;
   double minutes;
@@ -5,14 +24,12 @@ public class Timer {
   double timeIncrement;  // this increment will always be in seconds
   double totalSeconds;
   double newSeconds;
-  double leftSeconds;
 
   public Timer(double timeSlice) {
     seconds = 0;
     minutes = 0;
     hours = 0;
     timeIncrement = timeSlice;
-    leftSeconds = 0;
     totalSeconds = 0;
   }
 
@@ -22,29 +39,30 @@ public class Timer {
   }
 
   public double getSeconds() {
-    if(seconds % 60 == 0) {
+    if(totalSeconds % 60 == 0) {
       return 0;
     }
-    if(seconds < 60) {
-      return seconds;
+    if(totalSeconds < 60) {
+      return totalSeconds;
     }
     if((seconds > 60) && (seconds%60 != 0)) {
-      seconds = seconds % 60;
-      return seconds;
+      totalSeconds = totalSeconds % 60;
+      return totalSeconds;
     }
-    return seconds;
+    return totalSeconds;
   }
 
   public double getMinutes() {
-    if(seconds < 60) {
+    if(totalSeconds < 60) {
       return 0;
     }
-    if((seconds % 60 == 0) && (seconds >= 60)) {
-      minutes = seconds / 60;
+    if((totalSeconds % 60 == 0) && (totalSeconds >= 60)) {
+      minutes = totalSeconds / 60;
       return minutes;
     }
-    if((seconds % 60 != 0) && (seconds > 60)) {
-      double ns = seconds - leftSeconds;
+    if((totalSeconds % 60 != 0) && (totalSeconds > 60)) {
+      double leftSeconds = totalSeconds % 60;
+      double ns = totalSeconds - leftSeconds;
       minutes = ns / 60;
       return minutes;
     }
