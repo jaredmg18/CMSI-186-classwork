@@ -25,6 +25,9 @@ public class Timer {
   static double totalSeconds;
   double newSeconds;
 
+   /** constructor method for Timer
+    * @param timeSlice double value that defines how often user wants to be updated on the ball positions
+    */
   public Timer(double timeSlice) {
     seconds = 0;
     minutes = 0;
@@ -33,11 +36,17 @@ public class Timer {
     totalSeconds = 0;
   }
 
+  /**
+   * defines what a "tick" is, will be used as increment for Soccer Simulation
+   */
   public double tick() {
     totalSeconds += timeIncrement;
     return totalSeconds;
   }
 
+    /**
+     * the main to string method that calculates how many hours, minutes and seconds are there after each tick
+     */
   public String toString() {
     if(totalSeconds < 60) {
       seconds = totalSeconds;
@@ -63,6 +72,9 @@ public class Timer {
     return "Timer: " + hours + ":" + minutes + ":" + seconds;
   }
 
+  /**
+   * tests for the Timer class
+   */
   public static void main (String args[]) {
     System.out.println("Testing timer with time slice 1 second");
     Timer t = new Timer(1);
