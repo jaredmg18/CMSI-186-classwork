@@ -38,90 +38,76 @@ public class Timer {
     return totalSeconds;
   }
 
-  public double getSeconds() {
-    if(totalSeconds % 60 == 0) {
-      return 0;
-    }
-    if(totalSeconds < 60) {
-      return totalSeconds;
-    }
-    if((seconds > 60) && (seconds%60 != 0)) {
-      totalSeconds = totalSeconds % 60;
-      return totalSeconds;
-    }
-    return totalSeconds;
-  }
-
-  public double getMinutes() {
-    if(totalSeconds < 60) {
-      return 0;
-    }
-    if((totalSeconds % 60 == 0) && (totalSeconds >= 60)) {
-      minutes = totalSeconds / 60;
-      return minutes;
-    }
-    if((totalSeconds % 60 != 0) && (totalSeconds > 60)) {
-      double leftSeconds = totalSeconds % 60;
-      double ns = totalSeconds - leftSeconds;
-      minutes = ns / 60;
-      return minutes;
-    }
-    return minutes;
-  }
-
-  public double getHours() {
-    if(minutes < 60) {
-      return 0;
-    }
-    if((minutes % 60 == 0) && (minutes >= 60)) {
-      hours = minutes / 60;
-      return hours;
-    }
-    if((minutes % 60 != 0) && (minutes > 60)) {
-      double leftMinutes = minutes % 60;
-      double nm = minutes - leftMinutes;
-      hours = nm / 60;
-      return hours;
-    }
-    return hours;
-  }
-
   public String toString() {
-    return "Timer: [" + hours + ":" + minutes + ":" + totalSeconds + "]";
+    if(totalSeconds < 60) {
+      seconds = totalSeconds;
+      minutes = 0;
+      hours = 0;
+      return "Timer: " + hours + ":" + minutes + ":" + seconds;
+    }
+    if((totalSeconds >= 60) && (totalSeconds < 3600)) {
+      seconds = totalSeconds % 60;
+      minutes = Math.floor(totalSeconds/60);
+      hours = 0;
+      return "Timer: " + hours + ":" + minutes + ":" + seconds;
+    }
+    if ((totalSeconds >= 3600) && (totalSeconds <= 43200)) {
+      seconds = totalSeconds % 60;
+      minutes = ((Math.floor(totalSeconds/60)) % 60);
+      hours = (Math.floor(Math.floor(totalSeconds/60)/60));
+      return "Timer: " + hours + ":" + minutes + ":" + seconds;
+    }
+    if (totalSeconds > 43200) {
+      return "Time has gone past an entire day";
+    }
+    return "Timer: " + hours + ":" + minutes + ":" + seconds;
   }
 
   public static void main (String args[]) {
     System.out.println("Testing timer with time slice 1 second");
     Timer t = new Timer(1);
     t.tick();
-    t.toString();
-    System.out.println("Timer: [" + t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds() + "]");
+    System.out.println("" + t.toString());
     t.tick();
-    t.toString();
-    System.out.println("Timer: [" + t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds() + "]");
+    System.out.println("" + t.toString());
 
     System.out.println("Testing timer with time slice 30 seconds");
     Timer t2 = new Timer(30);
     t2.tick();
-    t2.toString();
-    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+    System.out.println("" + t2.toString());
     t2.tick();
-    t2.toString();
-    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+    System.out.println("" + t2.toString());
     t2.tick();
-    t2.toString();
-    System.out.println("Timer: [" + t2.getHours() + ":" + t2.getMinutes() + ":" + t2.getSeconds() + "]");
+    System.out.println("" + t2.toString());
+    t2.tick();
+    System.out.println("" + t2.toString());
+    t2.tick();
+    System.out.println("" + t2.toString());
 
     System.out.println("Testing timer with time slice 60 seconds");
     Timer t3 = new Timer(60);
     t3.tick();
-    t3.toString();
-    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
+    System.out.println("" + t3.toString());
     t3.tick();
-    t3.toString();
-    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
+    System.out.println("" + t3.toString());
     t3.tick();
-    t3.toString();
-    System.out.println("Timer: [" + t3.getHours() + ":" + t3.getMinutes() + ":" + t3.getSeconds() + "]");
+    System.out.println("" + t3.toString());
+
+    System.out.println("Testing timer with time slice 10 seconds");
+    Timer t4 = new Timer(10);
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
+    t4.tick();
+    System.out.println("" + t4.toString());
   }
 }
