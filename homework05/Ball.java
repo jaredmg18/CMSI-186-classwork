@@ -1,3 +1,21 @@
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  File name     :  Ball.java
+ *  Purpose       :  Ball class that defines a ball, which will be used for the Soccer Simulation program
+ *  @see
+ *  @author       :  Jared Gencarella
+ *  Date written  :  2017-03-14
+ *  Description   :  This class provides methods to construct a ball that will be used to be "kicked" in the Soccer Simulation program. 
+ *  Notes         :  Added throughout methods in the class
+ *  Warnings      :  None
+ *  Exceptions    :  None
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Revision Histor
+ *  ---------------
+ *            Rev      Date     Modified by:       Reason for change/modification
+ *           -----  ----------  ------------      -----------------------------------------------------------
+ *  @version 1.0.0  2017-03-14  Jared Gencarella   Initial writing and release
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 import java.lang.*;
 
 public class Ball {
