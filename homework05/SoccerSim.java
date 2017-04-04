@@ -170,9 +170,12 @@ public class SoccerSim {
     timer.tick();
     if (s.ballCollision() == true) {
       System.exit(-1);
-    }
-    if (s.poleCollision() == true) {
-      System.exit(-1);
+    } else {
+      if (s.poleCollision() == true) {
+        System.exit(-1);
+      } else {
+        s.getBalls();
+      }
     }
     while (s.isStillRunning()) {
       timer.tick();
