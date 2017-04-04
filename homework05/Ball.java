@@ -76,10 +76,13 @@ public class Ball {
   public double[] updateSpeed() {
     deltaV[0] = Double.parseDouble(df.format(deltax));
     deltaV[1] = Double.parseDouble(df.format(deltay));
-    deltax = .99 * deltax;
-    deltay = .99 * deltay;
-    return deltaV;
+    if (isMoving() == true) {
+      deltax = .99 * deltax;
+      deltay = .99 * deltay;
+      return deltaV;
     }
+    return deltaV;
+  }
 
     /**
      * method that updates the position for the ball in the x and y coordinates
@@ -87,8 +90,11 @@ public class Ball {
     public double[] updatePos() {
       bPosition[0] = Double.parseDouble(df.format(xpos));
       bPosition[1] = Double.parseDouble(df.format(ypos));
-      xpos = xpos + deltax;
-      ypos = ypos + deltay;
+      if(isMoving() == true) {
+        xpos = xpos + deltax;
+        ypos = ypos + deltay;
+        return bPosition;
+      }
       return bPosition;
     }
 
