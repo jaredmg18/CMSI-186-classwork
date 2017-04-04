@@ -4,7 +4,7 @@
  *  @see
  *  @author       :  Jared Gencarella
  *  Date written  :  2017-03-14
- *  Description   :  This class provides methods to construct a ball that will be used to be "kicked" in the Soccer Simulation program. 
+ *  Description   :  This class provides methods to construct a ball that will be used to be "kicked" in the Soccer Simulation program.
  *  Notes         :  Added throughout methods in the class
  *  Warnings      :  None
  *  Exceptions    :  None
@@ -34,6 +34,13 @@ public class Ball {
   private double[] bPosition = new double[2];
   private double[] deltaV = new double[2];
 
+  /**
+   * main constructor for the Ball class
+   * @param x double value x coordinate of the ball
+   * @param y double value y coordinate of the ball
+   * @param dx double value speed the ball is traveling on the X-axis
+   * @param dy double value speed the ball is traveling
+   */
   public Ball(double x, double y, double dx, double dy) {
     xpos = x;
     ypos = y;
@@ -41,6 +48,12 @@ public class Ball {
     deltay = dy;
   }
 
+  /**
+   * method that checks if thes and y positions are within the field
+   * any value between -200 and 200 for both x and y is considered within the field
+   * @param xpos double value x position taken from the constructor method
+   * @param ypos double value y position taken from the constructor method
+   */
   public void validatePosition(double xpos, double ypos) {
     if (xpos < 200 && xpos > -200) {
       xpos = xpos;
@@ -54,6 +67,9 @@ public class Ball {
     }
   }
 
+  /**
+   * method that updates the speeds for the ball in the x and y directions
+   */
   public double[] updateSpeed() {
     deltaV[0] = deltax;
     deltaV[1] = deltay;
@@ -62,20 +78,32 @@ public class Ball {
     return deltaV;
     }
 
+    /**
+     * method that updates the position for the ball in the x and y coordinates
+     */
     public double[] updatePos() {
-      bPosition[0] = xpos + deltaV[0];
-      bPosition[1] = ypos + deltaV[1];
+      bPosition[0] = xpos += deltaV[0];
+      bPosition[1] = ypos += deltaV[1];
       return bPosition;
     }
 
+    /**
+     * method that takes the updated positions and turns them into a string
+     */
     public String posToString() {
       return "[" + bPosition[0] + "," + bPosition[1] + "]";
     }
 
+    /**
+     * method that takes the updated speeds and turns them into a string
+     */
     public String speedToString() {
       return "[" + deltaV[0] + "," + deltaV[1] + "]";
     }
 
+    /**
+     * method that checks if the ball is still considered to be moving.
+     */
     public boolean isMoving() {
       if((xpos < -200) || (xpos > 200)) {
         return false;
@@ -89,6 +117,9 @@ public class Ball {
       return true;
     }
 
+  /**
+   * tests for the Ball class
+   */
   public static void main (String args[] ) {
     Timer timer1 = new Timer(1);
     System.out.println("Testing position with x value of 10 and y value of 30");
@@ -121,16 +152,30 @@ public class Ball {
    System.out.println("Testing with a time increment of 10 seconds");
    Ball b2 = new Ball(10, 30, 2, 3);
    System.out.println("Time: " + timer2.toString());
-   b.updatePos();
-   System.out.println("Position: " + b.posToString());
-   b.updateSpeed();
-   System.out.println("Speed: " + b.speedToString());
+   b2.updatePos();
+   System.out.println("Position: " + b2.posToString());
+   b2.updateSpeed();
+   System.out.println("Speed: " + b2.speedToString());
 
    timer2.tick();
    System.out.println("Time: " + timer2.toString());
-   b.updatePos();
-   System.out.println("Position: " + b.posToString());
-   b.updateSpeed();
-   System.out.println("Speed: " + b.speedToString());
+   b2.updatePos();
+   System.out.println("Position: " + b2.posToString());
+   b2.updateSpeed();
+   System.out.println("Speed: " + b2.speedToString());
+
+   timer2.tick();
+   System.out.println("Time: " + timer2.toString());
+   b2.updatePos();
+   System.out.println("Position: " + b2.posToString());
+   b2.updateSpeed();
+   System.out.println("Speed: " + b2.speedToString());
+
+   timer2.tick();
+   System.out.println("Time: " + timer2.toString());
+   b2.updatePos();
+   System.out.println("Position: " + b2.posToString());
+   b2.updateSpeed();
+   System.out.println("Speed: " + b2.speedToString());
   }
 }
