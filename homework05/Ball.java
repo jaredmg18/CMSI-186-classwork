@@ -17,8 +17,11 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 import java.lang.*;
+import java.text.DecimalFormat;
 
 public class Ball {
+
+  DecimalFormat df = new DecimalFormat("####.####");
 
   private static final double bRadius = 4.45; // radius of each ball in inches
   private static final double bWeight = 1; // weight of each ball in pounds
@@ -71,8 +74,8 @@ public class Ball {
    * method that updates the speeds for the ball in the x and y directions
    */
   public double[] updateSpeed() {
-    deltaV[0] = deltax;
-    deltaV[1] = deltay;
+    deltaV[0] = Double.parseDouble(df.format(deltax));
+    deltaV[1] = Double.parseDouble(df.format(deltay));
     deltax = .99 * deltax;
     deltay = .99 * deltay;
     return deltaV;
@@ -82,10 +85,32 @@ public class Ball {
      * method that updates the position for the ball in the x and y coordinates
      */
     public double[] updatePos() {
-      bPosition[0] = xpos += deltaV[0];
-      bPosition[1] = ypos += deltaV[1];
+      bPosition[0] = Double.parseDouble(df.format(xpos));
+      bPosition[1] = Double.parseDouble(df.format(ypos));
+      xpos = xpos + deltax;
+      ypos = ypos + deltay;
       return bPosition;
     }
+
+    public double getXpos() {
+      return xpos;
+    }
+
+    public double getYpos() {
+      return ypos;
+    }
+
+    public double[] getPos() {
+      bPosition[0] = Double.parseDouble(df.format(xpos));
+      bPosition[1] = Double.parseDouble(df.format(ypos));
+      return bPosition;
+      }
+
+    public double[] getSpeed() {
+      deltaV[0] = Double.parseDouble(df.format(deltax));
+      deltaV[1] = Double.parseDouble(df.format(deltay));
+      return deltaV;
+      }
 
     /**
      * method that takes the updated positions and turns them into a string
