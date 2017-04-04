@@ -52,8 +52,8 @@ public class SoccerSim {
     System.out.println(" Third argument is the speed along the X-axis you want the ball to start travel in ");
     System.out.println(" Fourth argument is the speed along the Y-axis you want the ball to start travel in ");
     System.out.println(" \n You can have as many balls as you like, and if you wish to have more you insert them as follows (after your 4th argument):");
-    System.out.println(" X coordinate, Y coordinate, X speed, Y speed (all for one ball) ");
-    System.out.println(" Repeat this until you have inserted the information for the number of balls desired ");
+    System.out.println(" X coordinate, Y coordinate, X speed, Y speed (all for one ball)");
+    System.out.println(" Repeat until you have inserted information for all desired balls");
     System.out.println(" There is a Flagpole at coordinates (100,50) ");
     System.out.println(" The time slice is set at 1 second and cannot be changed ");
     if (4 > args.length ) {
@@ -67,11 +67,12 @@ public class SoccerSim {
       System.exit(-1);
     }
     if (4 <= args.length) {
+      System.out.println("\n Program begin:");
       numBalls = Math.floor(args.length / 4);
-      System.out.println("numBalls = " + numBalls);
+      System.out.println(" numBalls = " + numBalls);
       ballArray = new Ball[(int)numBalls];
       t = new Timer(1);
-      System.out.println("Starting positions: ");
+      System.out.println(" Starting positions: ");
       int j = 0; // tracks balls in the ballArray
       for (int i = 0; i < args.length; i += 4) {
         double xposBall = Double.parseDouble(args[0 + i]);
@@ -82,6 +83,7 @@ public class SoccerSim {
         ballArray[j].updatePos();
         ballArray[j].updateSpeed();
         System.out.println("Ball " + j + " position: [" + ballArray[j].posToString() + "] and velocity: [" + ballArray[j].speedToString() + "]");
+        System.out.println("at " + t.toString());
         j++;
         }
       }
@@ -105,6 +107,7 @@ public class SoccerSim {
       ballArray[i].getPos();
       ballArray[i].getSpeed();
       System.out.println("Ball " + i + " position: " + ballArray[i].posToString() + " and velocity: " + ballArray[i].speedToString());
+      System.out.println("at " + t.toString());
     }
   }
 
@@ -113,7 +116,8 @@ public class SoccerSim {
    */
    public boolean isStillRunning() {
      for (int i = 0; i < ballArray.length; i++)
-       if (ballArray[i].isMoving()) {
+       if ((ballArray[i].getPos()[0] < 200) && (ballArray[i].getPos()[0] > -200) && (ballArray[i].getPos()[1] < 200) && (ballArray[i].getPos()[1] > -200) &&
+       (ballArray[i].getSpeed()[0] > (1/12)) && (ballArray[i].getSpeed()[0] > (1/12)) && (ballArray[i].getSpeed()[1] > (1/12) && (ballArray[i].getSpeed()[1] > (1/12)))) {
          return true;
      }
      System.out.println("No possible collision, all balls are either out of bounds or have stopped moving");
@@ -124,11 +128,12 @@ public class SoccerSim {
    * method that checks if a collision has occured in the simulation
    */
   public boolean ballCollision() {
-    for (int i = 0; i < (ballArray.length - 2); i++) {
+    for (int i = 0; i <= (ballArray.length - 2); i++) {
       for (int j = i + 1; j <= (ballArray.length - 1); j++) {
-        double distance = Math.sqrt((Math.pow(ballArray[j].getPos()[0] - ballArray[i].getPos()[0], 2)) + (Math.pow(ballArray[j].getPos()[1] - ballArray[i].getPos()[1], 2)));
+        double distance = Math.sqrt((Math.pow((ballArray[j].getPos()[0] - ballArray[i].getPos()[0]), 2)) + (Math.pow((ballArray[j].getPos()[1] - ballArray[i].getPos()[1]), 2)));
         if (distance <= (8.9/12)) {
-          System.out.println("Collision between ball" + (j + 1) + " [" + ballArray[j].posToString() + "] and ball" + (i + 1) + "[" + ballArray[i].posToString() + "] at " + t.toString());
+          System.out.println("Collision between ball" + j + " [" + ballArray[j].posToString() + "] and ball" + i + "[" + ballArray[i].posToString() + "]");
+          System.out.println("at " + t.toString());
           return true;
         }
         return false;
@@ -146,6 +151,7 @@ public class SoccerSim {
       double distance = Math.sqrt((Math.pow(ballArray[i].getPos()[0] - 100, 2) + (Math.pow(ballArray[i].getPos()[1] - 50, 2))));
       if (distance <= (8.9/12)) {
         System.out.println("Collision between ball" + i + " " + ballArray[i].posToString() + " and the pole [100, 50]");
+        System.out.println("at " + t.toString());
         return true;
       }
       return false;
@@ -161,6 +167,13 @@ public class SoccerSim {
     SoccerSim s = new SoccerSim();
     Timer timer = new Timer(1);
     s.handleInitialArguments(args);
+    timer.tick();
+    if (s.ballCollision() == true) {
+      System.exit(-1);
+    }
+    if (s.poleCollision() == true) {
+      System.exit(-1);
+    }
     while (s.isStillRunning()) {
       timer.tick();
       s.updateBalls();
