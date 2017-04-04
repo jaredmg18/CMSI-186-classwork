@@ -19,85 +19,116 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 import java.lang.*;
+import java.text.DecimalFormat;
 
 public class SoccerSim {
 
+  DecimalFormat df = new DecimalFormat("####.####");
+
   private static double numBalls;
-  private Ball[] ballArray;
+  private Ball[] ballArray = null;
   private Timer t;
   private double timeSlice;
   static double defaultTimeSlice = 1;
+  public boolean[] isStillRunning;
 
+ /**
+  * constructor method for Soccer Simulation
+  */
   public SoccerSim() {
     numBalls = 0;
     timeSlice = 0;
     ballArray = null;
   }
 
+ /**
+  * method that tells the program what to do with the arguments the user inputs
+  */
   public void handleInitialArguments(String args[]) {
     System.out.println("\n Hello World! Welcome to Soccer Simulation \n");
     System.out.println(" Arguments work as follows: ");
-    System.out.println(" First argument is the time slice you want to use ");
-    System.out.println(" Second argument is the X coordinate you want your first ball to start in ");
-    System.out.println(" Third argument is the Y coordinate you want your first ball to start in ");
-    System.out.println(" Fourth argument is the speed along the X-axis you want the ball to start travel in ");
-    System.out.println(" Fifth argument is the speed along the Y-axis you want the ball to start travel in ");
-    System.out.println(" \n You can have as many balls as you like, and if you wish to have more you insert them as follows (after your 6th argument): \n ");
+    System.out.println(" First argument is the X coordinate you want your first ball to start in ");
+    System.out.println(" Second argument is the Y coordinate you want your first ball to start in ");
+    System.out.println(" Third argument is the speed along the X-axis you want the ball to start travel in ");
+    System.out.println(" Fourth argument is the speed along the Y-axis you want the ball to start travel in ");
+    System.out.println(" \n You can have as many balls as you like, and if you wish to have more you insert them as follows (after your 4th argument):");
     System.out.println(" X coordinate, Y coordinate, X speed, Y speed (all for one ball) ");
     System.out.println(" Repeat this until you have inserted the information for the number of balls desired ");
     System.out.println(" There is a Flagpole at coordinates (100,50) ");
-    if (5 > args.length ) {
-      System.out.println("\n Sorry, you must specify at least the following arguments: \n");
-      System.out.println(" Time slice, X coordinate of a ball, Y coordinate of a ball, speed on x-axis, speed on y-axis ");
+    System.out.println(" The time slice is set at 1 second and cannot be changed ");
+    if (4 > args.length ) {
+      System.out.println("\n Sorry, you must specify at least the following arguments:");
+      System.out.println("X coordinate of a ball, Y coordinate of a ball, speed on x-axis, speed on y-axis");
       System.exit(-1);
     }
-    if ((args.length - 1) % 4 != 0) {
-      System.out.println("\n You must have the folowing arguments: \n");
-      System.out.println(" 1 argument for the time slice");
+    if ((args.length) % 4 != 0) {
+      System.out.println("\n You must have the folowing arguments:");
       System.out.println(" 4 arguments per ball you wish to 'kick'");
       System.exit(-1);
     }
-    if (5 <= args.length) {
-      numBalls = Math.floor((args.length - 1) / 4);
+    if (4 <= args.length) {
+      numBalls = Math.floor(args.length / 4);
+      System.out.println("numBalls = " + numBalls);
       ballArray = new Ball[(int)numBalls];
-      t = new Timer(Double.parseDouble(args[0]));
+      t = new Timer(1);
       System.out.println("Starting positions: ");
-      for (int i = 0; i < numBalls; i += 4) {
-        double xposBall = Double.parseDouble(args[1 + i]);
-        double yposBall = Double.parseDouble(args[2 + i]);
-        double deltaxBall = Double.parseDouble(args[3 + i]);
-        double deltayBall = Double.parseDouble(args[4 + i]);
-        ballArray[i] = new Ball(xposBall, yposBall, deltaxBall, deltayBall);
-        ballArray[i].updatePos();
-        ballArray[i].updateSpeed();
-        System.out.println("Ball " + i + " position: [" + ballArray[i].posToString() + "] and velocity: [" + ballArray[i].speedToString() + "]");
+      int j = 0; // tracks balls in the ballArray
+      for (int i = 0; i < args.length; i += 4) {
+        double xposBall = Double.parseDouble(args[0 + i]);
+        double yposBall = Double.parseDouble(args[1 + i]);
+        double deltaxBall = Double.parseDouble(args[2 + i]);
+        double deltayBall = Double.parseDouble(args[3 + i]);
+        ballArray[j] = new Ball(xposBall, yposBall, deltaxBall, deltayBall);
+        ballArray[j].updatePos();
+        ballArray[j].updateSpeed();
+        System.out.println("Ball " + j + " position: [" + ballArray[j].posToString() + "] and velocity: [" + ballArray[j].speedToString() + "]");
+        j++;
         }
       }
     }
 
+  /**
+   * method that updates the position and speeds of all the balls used in the simulation
+   */
   public void updateBalls() {
-    for (int i = 0; i < numBalls; i++) {
+    for (int i = 0; i < ballArray.length; i++) {
       ballArray[i].updatePos();
       ballArray[i].updateSpeed();
-      System.out.println("Ball " + i + " position: [" + ballArray[i].posToString() + "] and velocity: [" + ballArray[i].speedToString() + "]");
     }
   }
 
-  public boolean isStillRunning() {
-    for (int i = 0; i < numBalls; i++)
-      if (ballArray[i].isMoving()) {
-        return true;
+  /**
+   * method that gets the position and speeds of all the balls used in the simulation
+   */
+  public void getBalls() {
+    for (int i = 0; i < ballArray.length; i++) {
+      ballArray[i].getPos();
+      ballArray[i].getSpeed();
+      System.out.println("Ball " + i + " position: " + ballArray[i].posToString() + " and velocity: " + ballArray[i].speedToString());
     }
-    System.out.println("No possible collision, all balls are either out of bounds or have stopped moving");
-    return false;
   }
 
+  /**
+   * method that checks if the balls are still moving in the simulation
+   */
+   public boolean isStillRunning() {
+     for (int i = 0; i < ballArray.length; i++)
+       if (ballArray[i].isMoving()) {
+         return true;
+     }
+     System.out.println("No possible collision, all balls are either out of bounds or have stopped moving");
+     return false;
+ }
+
+  /**
+   * method that checks if a collision has occured in the simulation
+   */
   public boolean ballCollision() {
-    for (int i = 0; i <= (numBalls - 2); i++) {
-      for (int j = i + 1; j <= (numBalls - 1); j++) {
-        double distance = Math.sqrt((Math.pow(ballArray[j].updatePos()[0] - ballArray[i].updatePos()[0], 2)) + (Math.pow(ballArray[j].updatePos()[1] - ballArray[i].updatePos()[1], 2)));
+    for (int i = 0; i < (ballArray.length - 2); i++) {
+      for (int j = i + 1; j <= (ballArray.length - 1); j++) {
+        double distance = Math.sqrt((Math.pow(ballArray[j].getPos()[0] - ballArray[i].getPos()[0], 2)) + (Math.pow(ballArray[j].getPos()[1] - ballArray[i].getPos()[1], 2)));
         if (distance <= (8.9/12)) {
-          System.out.println("Collision between ball" + j + " [" + ballArray[j].posToString() + "] and ball" + i + "[" + ballArray[i].posToString() + "] at " + t.toString());
+          System.out.println("Collision between ball" + (j + 1) + " [" + ballArray[j].posToString() + "] and ball" + (i + 1) + "[" + ballArray[i].posToString() + "] at " + t.toString());
           return true;
         }
         return false;
@@ -107,21 +138,37 @@ public class SoccerSim {
   return false;
  }
 
+ /**
+  * method that checks if a ball has collided with the set pole
+  */
   public boolean poleCollision() {
+    for (int i = 0; i < ballArray.length; i++) {
+      double distance = Math.sqrt((Math.pow(ballArray[i].getPos()[0] - 100, 2) + (Math.pow(ballArray[i].getPos()[1] - 50, 2))));
+      if (distance <= (8.9/12)) {
+        System.out.println("Collision between ball" + i + " " + ballArray[i].posToString() + " and the pole [100, 50]");
+        return true;
+      }
+      return false;
+    }
     return false;
   }
 
+
+  /**
+   * main method for the Soccer Simulation program
+   */
   public static void main(String args[]) {
     SoccerSim s = new SoccerSim();
-    Timer t = new Timer(Double.parseDouble(args[0]));
+    Timer timer = new Timer(1);
     s.handleInitialArguments(args);
     while (s.isStillRunning()) {
-      t.tick();
+      timer.tick();
       s.updateBalls();
-      if (s.ballCollision()) {
+      s.getBalls();
+      if (s.ballCollision() == true) {
         break;
       }
-      if (s.poleCollision()) {
+      if (s.poleCollision() == true) {
         break;
       } else {
         continue;
