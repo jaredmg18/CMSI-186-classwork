@@ -1,6 +1,6 @@
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  File name     :  Fibonacci.java
- *  Purpose       :  Main program that runs the Soccer Simulation program.
+ *  Purpose       :  Class for Fibonacci calculations.
  *  @see
  *  @author       :  Jared Gencarella
  *  Date written  :  2017-04-16
