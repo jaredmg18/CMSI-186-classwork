@@ -250,7 +250,9 @@ public class GinormousIntTester {
 
       try {
          System.out.println( "    Test 014: Adding g11 and g12: " );
+         System.out.println("" + g11);
          System.out.println( "      expecting: 30 and got " + g11.add( g12 ) );
+         System.out.println("" + g11);
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
 
@@ -269,12 +271,14 @@ public class GinormousIntTester {
       try {
          System.out.println( "    Test 016: Adding g11 and g13 [10 + 234567] using bytes: " );
          System.out.println( "      expecting: 234577 and got " + g11.add( g13 ) );
+         System.out.println("" + g11 + " : " + g13);
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
 
       try {
          System.out.println( "    Test 017: Adding g11 and g13 [10 + 234567] using ints: " );
          System.out.println( "      expecting: 234577 and got " + g11.add( g13 ) );
+         System.out.println("" + g11);
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
 
@@ -388,6 +392,8 @@ public class GinormousIntTester {
                           "    ===========================" );
       try {
          System.out.println( "\n    Test 033: Checking compareTo() method on g1 and g2: "  );
+         System.out.println("" + g1.toString());
+         System.out.println("" + g2.toString());
          System.out.println( "      expecting: 0 and got: " + g1.compareTo( g2 ) );
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
@@ -473,6 +479,22 @@ public class GinormousIntTester {
       try {
          System.out.println( "      expecting: 200\n" +
                              "        and got: " + g7.multiply( g12 ) );
+      }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
+
+      System.out.println( "\n      Test 046: Multiplying g12 by g7 [20 * 10]: " );
+      try {
+         System.out.println( "      expecting: 200\n" +
+                             "        and got: " + g12.multiply( g7 ) );
+      }
+      catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
+
+      System.out.println( "\n\n    TESTING DIVIDE() METHOD:\n" +
+                          "    ==========================" );
+      System.out.println( "\n      Test 045: Dividing g12 by g7 [20 / 10]: " );
+      try {
+      System.out.println( "      expecting: 2\n" +
+                          "        and got: " + g7.divide( g12 ) );
       }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " + e.toString() ); }
 
