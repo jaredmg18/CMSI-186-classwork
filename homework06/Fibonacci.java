@@ -17,21 +17,25 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
  public class Fibonacci {
-    public static GinormousInt fibonacci(int number) {
-       if (number <= 2) {
-          return new GinormousInt("1");
+    private static GinormousInt num3 = new GinormousInt("0");
+    private static GinormousInt num1 = GinormousInt.ZERO;
+    private static GinormousInt num2 = GinormousInt.ONE;
+
+    public static GinormousInt fibonacci(int number){
+     if(number == 1){
+       return num1;
+     } else
+       if(number == 2){
+         return num2;
        } else {
-          GinormousInt num1 = new GinormousInt("0");
-          GinormousInt num2 = new GinormousInt("1");
-          for (int i = 2; i < number; i++) {
-             GinormousInt num3 = num1.add(num2);
-             System.out.println(num3);
-             num1 = num2;
-             num2 = num3;
-          }
-          return num1.add(num2);
-       }
-     }
+           for(int i = 2;i < number; i++){
+               num3 = num1.add(num2);
+               num1 = num2;
+               num2 = num3;
+        }
+      }
+    return num3;
+}
      public static void main(String[] args) {
         System.out.println(fibonacci(Integer.parseInt(args[0])));
      }
