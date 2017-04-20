@@ -1,3 +1,24 @@
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  File name     :  GinormousInt.java
+ *  Purpose       :  Main constructor that contains methods for GinormousInt
+ *  @see
+ *  @author       :  Jared Gencarella
+ *  Date written  :  2017-04-05
+ *  Description   :  This is the constructor that can be used for GinormmousIntTester to check the if values properly
+                     get calculated through the methods. This constructor will be used to handle numbers that otherwise
+                     could not be used in the terminal.
+ *  Notes         :  Added throughout methods in the class
+ *  Warnings      :  None
+ *  Exceptions    :  None
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Revision Histor
+ *  ---------------
+ *            Rev      Date     Modified by:       Reason for change/modification
+ *           -----  ----------  ------------      -----------------------------------------------------------
+ *  @version 1.0.0  2017-04-05  Jared Gencarella   Initial writing and release
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
 public class GinormousInt {
 
   public static final GinormousInt ZERO = new GinormousInt("0");
@@ -10,14 +31,12 @@ public class GinormousInt {
   private int ginSize;
   private String intString = "";
 
+
+  /**
+   * constructor method for GinormousInt. If the first value is one or 0, the class knows to
+     change the sign. Otherwise it builds what the rest of the code is saying.
+   */
   public GinormousInt (String value) {
-  //   bigString = value.trim();
-  //   char[] charArray = bigString.toCharArray();
-  //   String sign = String.valueOf(charArray[0]);
-  //   bigString = bigString.substring(1,charArray.length);
-  //   String[] parts = bigString.split("");
-  //   ginInt = Integer.parseInt(bigString);
-  // }
       if (value.equals("0")) {
         ginInt = new int[1];
         ginInt[0] = 0;
@@ -45,15 +64,25 @@ public class GinormousInt {
        }
    }
 
+  /**
+   * constructor for GinormousInt Array ginInt
+   */
   public GinormousInt (int[] value) {
      ginInt = value;
    }
 
+  /**
+   * method to switch the sign of the number. Used throughout the class as needed
+   */
   public GinormousInt changeSign() {
      ginSign = ginInt[ginInt.length - 1] = ginInt[ginInt.length - 1] * -1;
      return this;
    }
 
+  /**
+   * add method for GinormousInt. Used to add together integers that are too large for the
+     program to otherwise handle. Returns a value of this plus the argument input.
+   */
   public GinormousInt add( GinormousInt value ) {
     int[] solution;
     if (value.equals(ZERO)) {
@@ -63,9 +92,9 @@ public class GinormousInt {
          solution = this.ginInt;
          solution[this.ginInt.length - 1] = this.ginSign;
          for (int i = 0; i < value.ginSize; i++) {
-            // add column
+            // add a column for the array to run through
             solution[i] = solution[i] + value.ginInt[i];
-            // carry
+            // carries the ones place while adding to the tens place
             if (solution[i] > 9) {
                solution[i] = solution[i] - 10;
                solution[i + 1] = solution[i + 1] + 1;
@@ -88,10 +117,13 @@ public class GinormousInt {
                         if (this.ginSign < value.ginSign) {
                           return value.subtract(this.changeSign());
                         }
-      return null;
-   }
-   // returns a GinormousInt whose value is the sum of this plus the argument
+   return null;
+ }
 
+  /**
+   * subtract method for GinormousInt. Used to subtract integers that are too large for the
+    program to otherwise handle. Returns a value of this minus the argument input.
+   */
   public GinormousInt subtract(GinormousInt value) {
     if (this.compareTo(value) == 0) {
          return ZERO;
@@ -100,12 +132,10 @@ public class GinormousInt {
       if (this.compareTo(value) == 1 && this.ginSign + value.ginSign == 2) {
          solution = this.ginInt;
          for (int i = 0; i < value.ginSize; i++) {
-            // check for carry first
             if (solution[i] < value.ginInt[i]) {
                solution[i] = solution[i] + 10;
                solution[i + 1] = solution[i + 1] - 1;
             }
-            // column subtract
             solution[i] = solution[i] - value.ginInt[i];
          }
      return new GinormousInt(solution);
@@ -125,10 +155,13 @@ public class GinormousInt {
                           if (this.ginSign < value.ginSign) {
                             return value.add(this.changeSign());
                           }
-          return null;
-   }
-   // // returns a GinormousInt whose value is the difference of this minus the argument
+      return null;
+    }
 
+  /**
+   * mulyiply method for GinormousInt. Used to multiply together integers that are too large for the
+     program to otherwise handle. Returns a value of this times the argument input.
+   */
   public GinormousInt multiply(GinormousInt value) {
      if (this.equals(ZERO) || value.equals(ZERO)) {
         return ZERO;
@@ -147,7 +180,6 @@ public class GinormousInt {
          for (int j = 0; j < this.ginSize; j++) {
             solution[j + i] = solution[j+i] + (this.ginInt[j] * value.ginInt[i]);
          }
-         // carries
          for (int k = 0; k < solution.length; k++) {
             int temp = solution[k];
             if (solution[k] > 10) {
@@ -158,12 +190,40 @@ public class GinormousInt {
       }
       return new GinormousInt(solution);
    }
-   // // returns a GinormousInt whose value is the product of this times the argument
 
+  /**
+   * divide method for GinormousInt. Used to divide integers that are too large for the
+     program to otherwise handle. Returns a value of this divided by the argument input.
+   */
   public GinormousInt divide(GinormousInt value) {
-    throw new UnsupportedOperationException("Not working yet...");
-  }
+    int newSign = this.ginSign * value.ginSign;
+      if (this.ginSign == -1) {
+         this.changeSign();
+      }
+      if (value.ginSign == -1) {
+         value.changeSign();
+      }
+      if (this.compareTo(value) == -1) {
+         return ZERO;
+      } else if (this.equals(value)) {
+         return ONE;
+      }
+      else {
+         int i = 2;
+         System.out.println(value.multiply(new GinormousInt(i + "")).compareTo(this));
+         while (value.multiply(new GinormousInt(i + "")).compareTo(this) < 0) {
+            System.out.println(i);
+            i++;
+         }
+         i--;
+         return new GinormousInt(i + "");
+      }
+   }
 
+  /**
+   * To String method for GinormousInt. Takes the value at each given location in the argument and puts
+     it into string format.
+   */
   public String toString() {
     if (this.equals(ZERO)) {
          return "0";
@@ -172,11 +232,9 @@ public class GinormousInt {
          return "1";
       }
       String s = "";
-      // grab all numbers except sign
       for (int i = 0; i <= ginInt.length - 2; i++) {
          s = ginInt[i] + s;
       }
-      // remove leading zeroes
       while (s.charAt(0) == '0' && s.length() - 1 > 0) {
          s = s.substring(1);
       }
@@ -186,12 +244,20 @@ public class GinormousInt {
       return s;
   }
 
+  /**
+   * Value of method for GinormousInt. Takes a long value and displays it so it can be translated
+     to the int value used throughout GinormousInt.
+   */
   public static GinormousInt valueOf(long value) {
     String longString;
     longString = String.valueOf(value);
     return new GinormousInt(longString);
   }
 
+  /**
+   * method that compares the values of the argument and this GinormousInt. Indicates whether the value is greater than,
+     less than or equal to the GinormousInt.
+   */
   public int compareTo(GinormousInt value) {
     if (this.ginSign > value.ginSign) {
        return 1;
@@ -199,9 +265,9 @@ public class GinormousInt {
        if (this.ginSign < value.ginSign) {
          return -1;
       }  else
-        // if (this.ginSign == value.ginSign) {
-        //   return 0;
-        // } else
+        if (this == value) {
+          return 0;
+        } else
          if (this.ginSize > value.ginSize) {
             return (1 * this.ginSign);
          }  else
@@ -220,8 +286,10 @@ public class GinormousInt {
            }
       }
    }
-   // returns -1/0/1 as this GinormousInt is numerically less than/equal to/greater than the value passed as the argument
 
+   /**
+    * method that determines if the two given values are equal. Returns a boolean value as an answer.
+    */
   public boolean equals(Object x) {
     if (x instanceof GinormousInt) {
          GinormousInt y = (GinormousInt) x;
@@ -232,5 +300,4 @@ public class GinormousInt {
       }
       return false;
    }
-// returns true iff x is a GinormousInt whose value is numerically equal to this GinormousInt
 }
