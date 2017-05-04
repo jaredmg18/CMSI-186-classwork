@@ -1,217 +1,435 @@
-/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *  File name     :  DynamicChangemakerTestHarness.java
- *  Purpose       :  Provides a class defining methods for the DynamicChangemakerTestHarness class
- *  @author       :  Jared Gencarella
- *  Date written  :  2017-05-04
- *  Description   :  This class provides a bunch of methods which may be useful for the DynamicChangemakerTestHarness class
- *                   for Homework 7.  Includes the following:
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * File name  :  DynamicChangemakerTestHarness.java
+ * Purpose    :  Test harness for verification of the ChangeMaker class
+ * @author    :  Professor Don Murphy
+ * @author    :  B.J. Johnson totally ripped off from the original
+ * Date       :  2017-04-19
+ * Description:  This program provides a test harness for running tests to verify correct operaion of the
+ *                "ChangeMaker.java" class.  This class is intended to be used as part of homework 7, the
+ *                coin changemaker, which is a "Dynamic Programming" algorithm.
+ * Notes      :  None
+ * Warnings   :  None
  *
- *  Notes         :  Everything should work fine!
- *  Warnings      :  None
- *  Exceptions    :  IllegalArgumentException when the input arguments are "hinky"
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Revision History
+ * ================
+ *   Ver      Date     Modified by:  Reason for change or modification
+ *  -----  ----------  ------------  ---------------------------------------------------------------------
+ *  1.0.0  2017-04-19  B.J. Johnson  Initial release; stolen blatently from Professor Don Murphy with his
+ *                                    express permission and blessing; just added this comment block
+ *  1.1.0  2017-04-28  B.J. Johnson  Added complete JavaDocs; added "throws" clauses to the methods that
+ *                                    use them; added explanatory notes to comments; added "testCount"
+ *                                    field and "makeTwoDigits" method to implement automated test count
+ *                                    during test runs; added MAX_DENOM_VALUE constant for testing. along
+ *                                    with random Tuple generation, just for grins and giggles [not really
+ *                                    test-able, since it's the Forrest Gump of Tuples]
+ *  1.2.0  2017-05-01  B.J. Johnson  Added a few more test cases, running tests for euros and swiss francs
+ *                                    as well as a couple of extra tests for bogus denomination values to
+ *                                    check throwing exceptions and to verify that *something* returns an
+ *                                    "Impossible tuple" result.  Ready to commit the final version.
+ *
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
 
-
- /**
-  * This class represents the test harness for DynamicChangemaker.java
-  */
 public class DynamicChangemakerTestHarness {
 
-    private static int attempts = 0;
-    private static int successes = 0;
+   public static final int MAX_DENOM_VALUE = 73;
 
-    /**
-     * main program section for the test harness
-     *
-     * @param args arguments inputed by user (for the purpose of this test, these are
-                   already inputed by myself)
-     */
-    public static void main(String[] args) {
-        attempts = 0;
-        successes = 0;
+   private static int attempts = 0;
+   private static int successes = 0;
+   private static int testCount = 0;
 
-        test_USA();
-        test_Euro();
-        test_SwissFrancs();
-        test_Jmoney();
+   private static ArrayList<Integer> list = new ArrayList<Integer>();
 
-        System.out.println(successes + "/" + attempts + " tests passed.");
-    }
+  /**
+   *  main method just calls all the individual test methods
+   *   test_thisthing(), test_thatthing(), test_theotherthing() and so on
+   *   each test_whatever handles its own output and keeps adding to the pass/fail
+   *   at the end, main prints out a tally of how many tests run/passed
+   */
+   public static void main( String[] args ) {
+      attempts  = 0;
+      successes = 0;
 
-    /**
-     * method that will display success if the program got expected results
-     *
-     * @param value set argument that counts up the tests and tracks successes
-     */
-    private static void displaySuccessIfTrue(boolean value) {
-        attempts++;
-        successes += value ? 1 : 0;
+      System.out.println( "\n\n  TESTING CHANGEMAKER PROGRAM FUNCTIONALITY" +
+                          "\n  =========================================" );
 
-        System.out.println(value ? "success" : "failure");
-    }
+      test_USA();
+      test_Euros();            // 1,2,5,10,20,50
+      test_SwissFrancs();      // 5,10,20,50 (NO 1 CENT COIN!)
+      test_JmoneyBillz();     //  7, 3, 29, 15, 53 (made up currency, random order and no 1 cent coin)
 
-    /**
-     * method that catches if it is a failure and uses the displaySuccessIfTrue() method to display it
-     */
-    private static void displayFailure() {
-        displaySuccessIfTrue(false);
-    }
+      System.out.println( "creating random tuple: " + randomTuple( 7, true ) );
+      System.out.println( "creating random tuple: " + randomTuple( 7, false ) );
+      test_BogusDenomintaions1();
+      test_BogusDenomintaions2();
+      test_BogusDenomintaions3();
 
-    /**
-     * first test method, uses U.S.A. denominations
-     */
-    public static void test_USA() {
-        int[] usaDenominations = new int[] { 25, 10, 5, 1 };
+      System.out.println( "\n\nResults:\n      " + successes + "/" + attempts + " tests passed." );
+   }
 
-        Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming(usaDenominations, 99);
-        try {
-            displaySuccessIfTrue(3 == result.getElement(0));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+  /**
+   *  method to display a success or failure
+   *  @param  value  boolean value of something that evaluates success/failure
+   *    note that this can be any expression, including a test or method, which is why it's here
+   *    note that this method also increments the attempts and tracks the number of successes
+   *    there is no returned value, only a print out line which displays the result
+   */
+   private static void displaySuccessIfTrue( boolean value ) {
+      attempts++;
+      successes += value ? 1 : 0;
 
-        try {
-            displaySuccessIfTrue(2 == result.getElement(1));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println(value ? "success" : "failure");
+   }
 
-        try {
-            displaySuccessIfTrue(0 == result.getElement(2));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+  /**
+   *  method to display a failure
+   */
+   private static void displayFailure() {
+      displaySuccessIfTrue( false );
+   }
 
-        try {
-            displaySuccessIfTrue(4 == result.getElement(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
-    }
+  /**
+   *  method to run tests on USA denominations of coins; we all know what they are...
+   *   don't forget the 50 cent piece and the Sarah B. Anthony dollar [100-cent] coin!!
+   */
+   public static void test_USA() {
 
-    /**
-     * Second test method, uses European denominations
-     */
-    public static void test_Euro() {
-        int[] euroDenominations = new int[] { 50, 20, 10, 5, 1 };
+      int[] usaDenominations  = new int[] { 25, 10, 5, 1 };
+      Tuple result = null;
 
-        Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming(euroDenominations, 99);
-        try {
-            displaySuccessIfTrue(1 == result.getElement(0));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println( "\n\n  TESTING TO FIND OPTIMAL SOLUTION TO MAKING 99 cents USING US COINS" );
+      System.out.println( "  ==================================================================" );
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 99 cents: " );
 
-        try {
-            displaySuccessIfTrue(2 == result.getElement(1));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( usaDenominations, 99 );
 
-        try {
-            displaySuccessIfTrue(0 == result.getElement(2));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      try {
+        System.out.print( "      expecting Tuple: <3,2,0,4>: " );
+        displaySuccessIfTrue( "<3,2,0,4>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        try {
-            displaySuccessIfTrue(1 == result.getElement(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing that result using getElement(0): " );
+      try {
+         System.out.print( "      expecting 3 25-cent coins: " );
+         displaySuccessIfTrue( 3 == result.getElement(0));
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        try {
-            displaySuccessIfTrue(4 == result.getElement(4));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
-    }
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing that result using getElement(1): " );
+      try {
+         System.out.print( "      expecting 2 10-cent coins: " );
+         displaySuccessIfTrue( 2 == result.getElement(1));
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-    /**
-     * Third test method, uses Swiss denominations
-     */
-    public static void test_SwissFrancs() {
-        int[] swissDenominations = new int[] { 50, 20, 10, 5,  };
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing that result using getElement(2): " );
+      try {
+         System.out.print( "      expecting 0  5-cent coins: " );
+         displaySuccessIfTrue( 0 == result.getElement(2));
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming(swissDenominations, 95);
-        try {
-            displaySuccessIfTrue(1 == result.getElement(0));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing that result using getElement(3): " );
+      try {
+         System.out.print( "      expecting 4  1-cent coins: " );
+         displaySuccessIfTrue( 4 == result.getElement(3));
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        try {
-            displaySuccessIfTrue(2 == result.getElement(1));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      usaDenominations  = new int[] { 100, 50, 25, 10, 5, 1 };
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 25789 cents: " );
+      System.out.println( "        note: expanded denominations including 50 cent and Susan B. Anthony dollar" );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( usaDenominations, 25789 );
+      try {
+         System.out.print( "      expecting Tuple: <257,1,1,1,0,4>: " );
+         displaySuccessIfTrue( "<257,1,1,1,0,4>".equals( result.toString() ) );
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        try {
-            displaySuccessIfTrue(0 == result.getElement(2));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println( "\n\n  TESTING TO FIND OPTIMAL SOLUTION USING NON-STANDARD DENOMINATIONS" );
+      System.out.println( "  =================================================================" );
+      int[] newDenominations  = new int[] { 2, 3 };
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 6 cents using " + Arrays.toString( newDenominations ) + ": " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( newDenominations, 5 );
+      try {
+         System.out.print( "      expecting Tuple: <1,1>: " );
+         displaySuccessIfTrue( "<1,1>".equals( result.toString() ) );
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        try {
-            displaySuccessIfTrue(1 == result.getElement(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
-    }
+      newDenominations  = new int[] { 2, 3, 7, 5, 51, 29, 11 };
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 13579 cents using " + Arrays.toString( newDenominations ) + ": " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( newDenominations, 13579 );
+      try {
+         System.out.print( "      expecting Tuple: <1,0,0,0,266,0,1>: " );
+         displaySuccessIfTrue( "<1,0,0,0,266,0,1>".equals( result.toString() ) );
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-    /**
-     * Fourth test method, uses my own made up "Jmoney" denominations (no 1 coin and out of order)
-     */
-    public static void test_Jmoney() {
-        int[] jmoneyDenominations = new int[] { 7, 3, 29, 15, 53 };
+      newDenominations  = new int[] { 17, 23, 121, 47, 3 };
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 13579 cents using " + Arrays.toString( newDenominations ) + ": " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( newDenominations, 13579 );
+      try {
+         System.out.print( "      expecting Tuple: <3,0,111,2,1>: " );
+         displaySuccessIfTrue( "<3,0,111,2,1>".equals( result.toString() ) );
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
 
-        Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming(jmoneyDenominations, 97);
-        try {
-            displaySuccessIfTrue(0 == result.getElement(0));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+   }
 
-        try {
-            displaySuccessIfTrue(0 == result.getElement(1));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+   public static void test_Euros() {
 
-        try {
-            displaySuccessIfTrue(1 == result.getElement(2));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      int[] euroDenominations  = new int[] { 1, 2, 5, 10, 20, 50 };
+      Tuple result = null;
 
-        try {
-            displaySuccessIfTrue(1 == result.getElement(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
+      System.out.println( "\n\n  TESTING TO FIND OPTIMAL SOLUTION TO MAKING 99 cents USING EUROS" );
+      System.out.println( "  ===============================================================" );
 
-        try {
-            displaySuccessIfTrue(1 == result.getElement(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayFailure();
-        }
-    }
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 99 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( euroDenominations, 99 );
+      try {
+        System.out.print( "      expecting Tuple: <0,2,1,0,2,1>: " );
+        displaySuccessIfTrue( "<0,2,1,0,2,1>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 88 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( euroDenominations, 88 );
+      try {
+        System.out.print( "      expecting Tuple: <1,1,1,1,1,1>: " );
+        displaySuccessIfTrue( "<1,1,1,1,1,1>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 176 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( euroDenominations, 176 );
+      try {
+        System.out.print( "      expecting Tuple: <1,0,1,0,1,3>: " );
+        displaySuccessIfTrue( "<1,0,1,0,1,3>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+   }
+
+   public static void test_SwissFrancs() {
+
+      int[] francDenominations  = new int[] { 5, 10, 20, 50 };
+      Tuple result = null;
+
+      System.out.println( "\n\n  TESTING TO FIND OPTIMAL SOLUTION TO MAKING 99 cents USING FRANCS" );
+      System.out.println( "  ================================================================" );
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 99 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( francDenominations, 99 );
+      try {
+        System.out.print( "      expecting Tuple: Impossible tuple: " );
+        displaySuccessIfTrue( "Impossible tuple".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 85 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( francDenominations, 85 );
+      try {
+        System.out.print( "      expecting Tuple: <1,1,1,1>: " );
+        displaySuccessIfTrue( "<1,1,1,1>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 105 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( francDenominations, 105 );
+      try {
+        System.out.print( "      expecting Tuple: <1,0,0,2>: " );
+        displaySuccessIfTrue( "<1,0,0,2>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 135 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( francDenominations, 135 );
+      try {
+        System.out.print( "      expecting Tuple: <1,1,1,2>: " );
+        displaySuccessIfTrue( "<1,1,1,2>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+   }
+
+   public static void test_JmoneyBillz() {
+
+      int[] jmoneyDenominations  = new int[] { 7, 3, 29, 15, 53 };
+      Tuple result = null;
+
+      System.out.println( "\n\n  TESTING TO FIND OPTIMAL SOLUTION TO MAKING 99 cents USING JMONEYBILLZ (made up currency)" );
+      System.out.println( "  ================================================================" );
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 99 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( jmoneyDenominations, 99 );
+      try {
+        System.out.print( "      expecting Tuple: Impossible tuple: " );
+        displaySuccessIfTrue( "Impossible tuple".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 85 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( jmoneyDenominations, 97 );
+      try {
+        System.out.print( "      expecting Tuple: <0,0,1,1,1>: " );
+        displaySuccessIfTrue( "<0,0,1,1,1>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 105 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( jmoneyDenominations, 37 );
+      try {
+        System.out.print( "      expecting Tuple: <1,0,0,2,0>: " );
+        displaySuccessIfTrue( "<1,0,0,2,0>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+      System.out.println( "\n    Test" + makeTwoDigits() + ": testing optimal solution for 135 cents: " );
+      result = DynamicChangemaker.makeChangeWithDynamicProgramming( jmoneyDenominations, 106 );
+      try {
+        System.out.print( "      expecting Tuple: <0,0,0,0,2>: " );
+        displaySuccessIfTrue( "<0,0,0,0,2>".equals( result.toString() ) ) ;
+      } catch (Exception e) {
+         e.printStackTrace();
+         displayFailure();
+      }
+
+   }
+
+  /**
+   *  silly little method to add zeros to the front of a number string
+   *    to ensure it fills two places for test output alignment
+   *  @return two-character string that is a two-place number from 00 to 99
+   *  note: this method also increments the testCount private field
+   */
+   private static String makeTwoDigits() {
+      testCount++;
+      if( testCount < 10 ) {
+         return new String( "0" + testCount );
+      } else {
+         return new Integer( testCount ).toString();
+      }
+   }
+
+  /**
+   *  method to generate a random Tuple containing a random number of values
+   *  @param elementCount integer number of elements in the Tuple
+   *  @param oneAllowed   boolean value which is true if the number "1" is allowed in the values
+   *  Note that making change is more difficult [less possible] without a "1" in the list
+   *  @return  a Tuple containing 'elementCount' of the random values ranging no higher than MAX_DENOM_VALUE
+   */
+   public static Tuple randomTuple( int elementCount, boolean oneAllowed ) {
+      int start = oneAllowed ? 2 : 1;
+      int[] myDenoms = new int[ elementCount ];
+      for( int i = start; i <= MAX_DENOM_VALUE; i++ ) {
+         list.add( new Integer( i ) );
+      }
+      Collections.shuffle( list );
+      for( int i = 0; i < myDenoms.length; i++ ) {
+         myDenoms[i] = list.get( i );
+      }
+      Tuple rwoDenominations = new Tuple( myDenoms );
+      return rwoDenominations;
+   }
+
+  /**
+   * method to test a bogus set of denominations which includes a negative amount
+   */
+   public static void test_BogusDenomintaions1() {
+      System.out.println( "\n\n  TESTING TO RANDOM TUPLE GENERATION FOR THREE BOGUS DENOMINATION SETS" );
+      System.out.println( "  ====================================================================" );
+
+      int[] badDenominations = new int[] { 1, 2, 3, 4, -5, 6, 7 };
+      System.out.println( "\n    Test " + makeTwoDigits() + ": testing first list of bogus denomintaions, containing a negative......" );
+      System.out.println( "          expecting: success: " );
+      System.out.print  ( "            and got: " );
+      try {
+         Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
+      }
+      catch( Exception e ) {
+         displaySuccessIfTrue( false );
+         e.printStackTrace();
+         displayFailure();
+      }
+   }
+
+  /**
+   * method to test a bogus set of denominations which includes a zero
+   */
+   public static void test_BogusDenomintaions2() {
+      int[] badDenominations = new int[] { 2, 3, 5, 8, 13, 21, 0, 34 };
+      System.out.println( "\n    Test " + makeTwoDigits() + ": testing second list of bogus denomintaions, containing a zero......" );
+      System.out.println( "          expecting: success: " );
+      System.out.print  ( "            and got: " );
+      try {
+         Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
+      }
+      catch( Exception e ) {
+         displaySuccessIfTrue( false );
+         e.printStackTrace();
+         displayFailure();
+      }
+   }
+
+  /**
+   * method to test a bogus set of denominations which includes repeats
+   */
+   public static void test_BogusDenomintaions3() {
+      int[] badDenominations = new int[] { 2, 3, 2, 3 };
+      System.out.println( "\n    Test " + makeTwoDigits() + ": testing third list of bogus denomintaions, containing repeats......" );
+      System.out.println( "          expecting: success: " );
+      System.out.print  ( "            and got: " );
+      try {
+         Tuple result = DynamicChangemaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
+      }
+      catch( Exception e ) {
+         displaySuccessIfTrue( false );
+         e.printStackTrace();
+         displayFailure();
+      }
+   }
+
 }
